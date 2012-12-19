@@ -26,6 +26,13 @@ class UsersController < ApplicationController
   
      def new
       @user = User.new
+      if signed_in
+          redirect_to (root_path)
+      end
+     end
+     
+     def signed_in
+         @user.save
      end
   
    def create
@@ -34,11 +41,14 @@ class UsersController < ApplicationController
         sign_in @user
         flash[:success] = "Welcome to the Sample App!"  
         redirect_to @user
-     else
+    else if
+        signed_in
+        redirect_to (root_path)
+    else
       render 'new'
      end
     end
-  
+  end  
   def edit
    
   end
